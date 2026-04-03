@@ -1,34 +1,43 @@
-'use client';
+"use client";
+
 interface NavBarProps {
-  view: string; setView: (v: string) => void; isLoggedIn: boolean;
-  darkMode: boolean; setDarkMode: (d: boolean) => void;
-  onLogout: () => void; onLogin: () => void;
+  onMoodClick: () => void;
+  onSettingsClick: () => void;
+  remaining: number;
 }
-export function NavBar({ view, setView, isLoggedIn, darkMode, setDarkMode, onLogout, onLogin }: NavBarProps) {
+
+export default function NavBar({ onMoodClick, onSettingsClick, remaining }: NavBarProps) {
   return (
-    <nav className="w-full px-6 py-4 flex items-center justify-between border-b"
-         style={{ background: 'var(--background)', borderColor: 'var(--border)' }}>
-      <div className="flex items-center gap-2 cursor-pointer" onClick={() => setView('chat')}>
-        <span className="text-2xl">🌙</span>
-        <span className="font-semibold text-lg tracking-wide" style={{ color: 'var(--foreground)' }}>Moonly</span>
+    <header
+      className="flex items-center justify-between px-4 py-3 border-b"
+      style={{ borderColor: "var(--border)", backgroundColor: "var(--background)" }}
+    >
+      <div className="flex items-center gap-2">
+        <span className="text-xl">🌙</span>
+        <h1 className="text-base font-semibold" style={{ color: "var(--foreground)" }}>
+          Moonly
+        </h1>
       </div>
-      <div className="flex items-center gap-1">
-        <button onClick={() => setView('mood')} className="px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
-                style={{ background: view === 'mood' ? 'var(--card)' : 'transparent', color: 'var(--foreground)' }}>📝 Mood</button>
-        <button onClick={() => setView('settings')} className="px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
-                style={{ background: view === 'settings' ? 'var(--card)' : 'transparent', color: 'var(--foreground)' }}>⚙️ Settings</button>
-        {isLoggedIn ? (
-          <button onClick={onLogout} className="px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:opacity-80 ml-1"
-                  style={{ color: 'var(--foreground-muted)' }}>Logout</button>
-        ) : (
-          <button onClick={onLogin} className="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:opacity-80 ml-1"
-                  style={{ background: '#7C3AED', color: '#fff' }}>Login</button>
-        )}
-        <button onClick={() => setDarkMode(!darkMode)} className="ml-2 px-3 py-2 rounded-lg text-sm transition-colors hover:opacity-80"
-                style={{ background: 'var(--card)', color: 'var(--foreground)' }} aria-label="Toggle dark mode">
-          {darkMode ? '☀️' : '🌙'}
+
+      <div className="flex items-center gap-2">
+        <span className="text-xs px-2 py-1 rounded-full" style={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", color: "var(--foreground)" }}>
+          💬 {remaining} left
+        </span>
+        <button
+          onClick={onMoodClick}
+          className="text-xs px-3 py-1.5 rounded-full transition-colors"
+          style={{ backgroundColor: "#7C3AED", color: "white" }}
+        >
+          😊 Mood
+        </button>
+        <button
+          onClick={onSettingsClick}
+          className="w-8 h-8 rounded-full flex items-center justify-center text-sm"
+          style={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+        >
+          ⚙️
         </button>
       </div>
-    </nav>
+    </header>
   );
 }
